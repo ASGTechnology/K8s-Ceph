@@ -1,3 +1,10 @@
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: cephfs
+
+---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -25,6 +32,7 @@ kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: cephfs-provisioner
+  namespace: cephfs
 subjects:
   - kind: ServiceAccount
     name: cephfs-provisioner
@@ -66,13 +74,16 @@ metadata:
   name: cephfs-provisioner
   namespace: cephfs
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cephfs-provisioner
   namespace: cephfs
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: cephfs-provisioner
   strategy:
     type: Recreate
   template:
@@ -93,4 +104,3 @@ spec:
         args:
         - "-id=cephfs-provisioner-1"
       serviceAccount: cephfs-provisioner
-
