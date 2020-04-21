@@ -6,7 +6,7 @@ metadata:
   namespace: cephfs
 provisioner: ceph.com/cephfs
 parameters:
-    monitors: monitors: 10.10.10.11:6789,10.10.10.12:6789,10.10.10.13:6789
+    monitors: 10.10.10.11:6789,10.10.10.12:6789,10.10.10.13:6789
     adminId: admin
     adminSecretName: ceph-admin-secret
     adminSecretNamespace: cephfs
